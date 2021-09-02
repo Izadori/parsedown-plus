@@ -36,7 +36,7 @@ else {
 class ParsedownPlus extends DynamicParent
 {
   // Version
-  public const PARSEDOWNPLUS_VERSION = '1.0.0';
+  public const PARSEDOWNPLUS_VERSION = '1.0.1';
 
   //
   // public member variabls: ParsedownPlus options
