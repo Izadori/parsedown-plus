@@ -53,7 +53,7 @@ echo $parser->line($line); // prints: It's <strong>inline</strong> text!
 
 ### Composerを使わない方法
 
-Composerを使用しない場合は、[こちら](https://izadori.github.io/...)から`ParsedownPlus`のソースコードをプロジェクト内にダウンロードしてください。
+Composerを使用しない場合は、[こちら](https://github.com/Izadori/parsedown-plus/blob/main/parsedown-plus/ParsedownPlus.php)から`ParsedownPlus`のソースコードをプロジェクト内にダウンロードしてください。
 
 `ParsedownPlus`を使用するために、まずPHPのソース内で`Parsedown.php`と、必要であれば`ParsedownExtra.php`をrequireします。それから`ParsedownPlus.php`をrequireしてください。
 
@@ -109,7 +109,7 @@ echo $parser->line($line); // prints: It's <strong>inline</strong> text!
 
 ## バグについて
 
-バグが見つかった場合は、Github Project上の[issue](https://github.com/izadori/parsedown-plus/issues/new)に、バグの内容とバグが起こったMarkdownテキストをお知らせください。
+バグが見つかった場合は、Github上の[issue](https://github.com/izadori/parsedown-plus/issues/new)に、バグの内容とバグが起こったMarkdownテキストをお知らせください。
 
 ## ライセンスについて
 
@@ -119,7 +119,7 @@ echo $parser->line($line); // prints: It's <strong>inline</strong> text!
 
 - いざどり
   - [Github](https://github.com/izadori/parsedown-plus/)
-  - [ウェブサイト](https://izadori.net/)
+  - [ウェブサイト - いざどりのtrial and error](https://izadori.net/)
   - [E-mail](mailto:izadori.trial.and.error@gmail.com)
   - [Twitter](https://twitter.com/izadori97362)
 
