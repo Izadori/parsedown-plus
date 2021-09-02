@@ -113,7 +113,7 @@ echo $parser->line($line); // prints: It's <strong>inline</strong> text!
 
 ## ライセンスについて
 
-`ParsedownPlus`は[MITライセンス](http://opensource.org/licenses/MIT)に準拠します。詳細は[LICENSEファイル](https://github.com/izadori/parsedown-plus/main/LICENSE)を参照してください。
+`ParsedownPlus`は[MITライセンス](http://opensource.org/licenses/MIT)に準拠します。詳細は[LICENSEファイル](https://github.com/Izadori/parsedown-plus/blob/main/LICENSE)を参照してください。
 
 ## 作者について
 
