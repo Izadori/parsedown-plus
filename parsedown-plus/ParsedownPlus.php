@@ -8,6 +8,9 @@ namespace Izadori\ParsedownPlus;
 if (class_exists('ParsedownExtra')) {
   class DynamicParent extends \ParsedownExtra
   {
+    // Required Parsedown version
+    public const REQUIRED_PARSEDOWN_VERSION = '0.8';
+
     public function __construct()
     {
       parent::__construct();
@@ -17,6 +20,9 @@ if (class_exists('ParsedownExtra')) {
 else {
   class DynamicParent extends \Parsedown
   {
+    // Required Parsedown version
+    public const REQUIRED_PARSEDOWN_VERSION = '1.7';
+
     public function __construct()
     {
       //
@@ -31,13 +37,13 @@ class ParsedownPlus extends DynamicParent
 {
   // Version
   public const PARSEDOWNPLUS_VERSION = '1.0.0';
-  // Required Parsedown version
-  public const REQUIRED_PARSEDOWN_VERSION = '1.7';
 
   //
   // public member variabls: ParsedownPlus options
   //
 
+  // prefix of laguage type in fenced code
+  public $langPrefix = "language-";
   // beginning and end of header tag levels
   public $tocTag = array(
     'begin' => 2, // "h2"
@@ -76,7 +82,9 @@ class ParsedownPlus extends DynamicParent
     parent::__construct();
 
     if(\version_compare(parent::version, self::REQUIRED_PARSEDOWN_VERSION) < 0) {
-      throw new \Exception('ParsedownPlus: Parsedown version unmatched. Version 1.7 or later is required.');
+      throw new \Exception('ParsedownPlus: '.(
+        class_exists('ParsedownExtra') ? "ParsedownExtra" : "Parsedown"
+        ).' version unmatched. Version '.parent::REQUIRED_PARSEDOWN_VERSION.' or later is required.');
     }
 
     // for LaTex math
@@ -245,7 +253,7 @@ class ParsedownPlus extends DynamicParent
           $filename = null;
         }
 
-        $class = 'language-'.$language;
+        $class = $this->langPrefix.$language;
 
         $Element['attributes'] = array(
           'class' => $class,
