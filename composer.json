@@ -9,15 +9,14 @@
         "phpunit/phpunit": "^9.5"
     },
     "license": "MIT",
+    "minimum-stability": "stable",
     "autoload": {
         "psr-4": {
             "Izadori\\ParsedownPlus\\": "parsedown-plus/"
         }
     },
-    "authors": [
-        {
-            "name": "izadori",
-            "email": "izadori.trial.and.error@gmail.com"
-        }
-    ]
+    "authors": [{
+        "name": "izadori",
+        "email": "izadori.trial.and.error@gmail.com"
+    }]
 }
