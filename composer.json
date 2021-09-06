@@ -1,6 +1,7 @@
 {
     "name": "izadori/parsedown-plus",
     "description": "An Extension for Parsedown/ParsedownExtra",
+    "keywords": ["markdown", "markdown extra", "parser", "Parsedown", "ParsedownExtra"],
     "type": "library",
     "require": {
         "erusev/parsedown": "^1.7"

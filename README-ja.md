@@ -58,9 +58,9 @@ Composerを使用しない場合は、[こちら](https://github.com/Izadori/par
 `ParsedownPlus`を使用するために、まずPHPのソース内で`Parsedown.php`と、必要であれば`ParsedownExtra.php`をrequireします。それから`ParsedownPlus.php`をrequireしてください。
 
 ```php
-require __DIR__ . "/Parsedown.php";
-require __DIR__ . "/ParsedownExtra.php"; // 必要であれば
-require __DIR__ . "/ParsedownPlus.php";
+require_once __DIR__ . "/Parsedown.php";
+require_once __DIR__ . "/ParsedownExtra.php"; // 必要であれば
+require_ince __DIR__ . "/ParsedownPlus.php";
 
 use /Izadori;
 
@@ -140,3 +140,5 @@ echo $parser->line($line); // prints: It's <strong>inline</strong> text!
 1. __2021.09.02__
    - ParsedownPlus ver.1.0.1に合わせて記述を追加。
    - Github上に公開
+2. __2021.09.06__
+   - サンプルコードの記述を修正。
