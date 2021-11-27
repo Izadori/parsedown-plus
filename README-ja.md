@@ -134,6 +134,8 @@ echo $parser->line($line); // prints: It's <strong>inline</strong> text!
 2. __2021.09.02__ [_ver.1.0.1_]
    - ParsedownExtraでうまく動作しないのを修正。
    - コードフェンスの言語名を示すクラスの先頭文字列を変更できるようにした。
+3. __2021.11.28__ [_ver.1.0.2_]
+   - ブロック数式で出力される`<p>`タグに`class="block-math"`を付加するよう修正
 
 ### このドキュメント
 
