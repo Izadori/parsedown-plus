@@ -35,7 +35,7 @@ if (class_exists('ParsedownExtra')) {
 class ParsedownPlus extends DynamicParent
 {
   // Version
-  public const PARSEDOWNPLUS_VERSION = '1.1.1';
+  public const PARSEDOWNPLUS_VERSION = '1.0.3';
 
   //
   // public member variabls: ParsedownPlus options
@@ -189,12 +189,8 @@ class ParsedownPlus extends DynamicParent
       $text = $matches[2];
       $text = preg_replace("/[ ]*\n/", ' ', $text);
 
-      $matches_string = $text . $matches[1];
-      $matches_string = preg_replace("/\\</", "&lt;", $matches_string);
-      $matches_string = preg_replace("/\\>/", "&gt;", $matches_string);
-
       return array(
-        'markup' => $matches[1] . $matches_string,
+        'markup' => $matches[1] . htmlspecialchars($text . $matches[1]),
         'extent' => strlen($matches[0]),
       );
     }
