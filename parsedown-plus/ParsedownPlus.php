@@ -16,8 +16,7 @@ if (class_exists('ParsedownExtra')) {
       parent::__construct();
     }
   }
-}
-else {
+} else {
   class DynamicParent extends \Parsedown
   {
     // Required Parsedown version
@@ -85,10 +84,10 @@ class ParsedownPlus extends DynamicParent
   {
     parent::__construct();
 
-    if(version_compare(parent::version, self::REQUIRED_PARSEDOWN_VERSION) < 0) {
-      throw new \Exception('ParsedownPlus: '.(
+    if (version_compare(parent::version, self::REQUIRED_PARSEDOWN_VERSION) < 0) {
+      throw new \Exception('ParsedownPlus: ' . (
         class_exists('ParsedownExtra') ? "ParsedownExtra" : "Parsedown"
-        ).' version unmatched. Version '.parent::REQUIRED_PARSEDOWN_VERSION.' or later is required.');
+      ) . ' version unmatched. Version ' . parent::REQUIRED_PARSEDOWN_VERSION . ' or later is required.');
     }
 
     // for LaTex math
@@ -126,51 +125,51 @@ class ParsedownPlus extends DynamicParent
     $this->title = "";
     $this->isTitleFound = false;
 
-    if($this->tocTag['begin'] <= 0 || $this->tocTag['begin'] > 5){
+    if ($this->tocTag['begin'] <= 0 || $this->tocTag['begin'] > 5) {
       throw new \Exception('$tocTag["begin"] is out of range.');
-    }
-    elseif($this->tocTag['end'] <= 0 || $this->tocTag['end'] > 6){
+    } elseif ($this->tocTag['end'] <= 0 || $this->tocTag['end'] > 6) {
       throw new \Exception('$tocTag["end"] is out of range.');
-    }
-    elseif($this->tocTag['begin'] > $this->tocTag['end']) {
+    } elseif ($this->tocTag['begin'] > $this->tocTag['end']) {
       list(
-        $this->tocTag['begin'], $this->tocTag['end']
+        $this->tocTag['begin'],
+        $this->tocTag['end']
       ) = array(
-        $this->tocTag['end'], $this->tocTag['begin']
+        $this->tocTag['end'],
+        $this->tocTag['begin']
       );
     }
 
     // generate header tag list to make table-of-contents
-    foreach(range($this->tocTag['begin'], $this->tocTag['end']) as $number) {
-      $this->tocTagList[] = 'h'.$number;
+    foreach (range($this->tocTag['begin'], $this->tocTag['end']) as $number) {
+      $this->tocTagList[] = 'h' . $number;
     }
 
     // search first table-of-contents tag
     $pos = strlen($text) + 1;
-    foreach($this->tocIdentTag as $tag) {
+    foreach ($this->tocIdentTag as $tag) {
       $tmpPos = stripos($text, $tag);
-      if($tmpPos !== false && $pos > $tmpPos){
+      if ($tmpPos !== false && $pos > $tmpPos) {
         $pos = $tmpPos;
         $this->tocString = $tag;
       }
     }
 
     // replace table-of-contents tag to placeholder
-    if($this->tocString !== null) {
-      $this->tocPlaceholder = '<'.\bin2hex(random_bytes(4)).' />';
+    if ($this->tocString !== null) {
+      $this->tocPlaceholder = '<' . \bin2hex(random_bytes(4)) . ' />';
       $text = str_replace($this->tocString, $this->tocPlaceholder, $text);
     }
 
     // start parsing markdown and generating table-of-contentes
     $html = parent::text($text);
 
-    while($this->tocLastIndex >= 0) {
+    while ($this->tocLastIndex >= 0) {
       $this->tocText .= "</ol>\n";
       $this->tocLastIndex--;
     }
 
     // replace placeholder to generated table-of-contents HTML
-    if($this->tocString !== null) {
+    if ($this->tocString !== null) {
       $this->tocText = sprintf($this->tocFormat, chop($this->tocText));
       $html = str_replace($this->tocPlaceholder, $this->tocText, $html);
     }
@@ -183,16 +182,19 @@ class ParsedownPlus extends DynamicParent
   //
   protected function inlineMath($Excerpt)
   {
-    $marker = '\\'.$Excerpt['text'][0];
-    $pattern = '/^('.$marker.')([ ]*[^'.$marker.']+[ ]*)\1/s';
+    $marker = '\\' . $Excerpt['text'][0];
+    $pattern = '/^(' . $marker . ')([ ]*[^' . $marker . ']+[ ]*)\1/s';
 
-    if (preg_match($pattern, $Excerpt['text'], $matches))
-    {
+    if (preg_match($pattern, $Excerpt['text'], $matches)) {
       $text = $matches[2];
       $text = preg_replace("/[ ]*\n/", ' ', $text);
 
+      $matches_string = $text . $matches[1];
+      $matches_string = preg_replace("/\\</", "&lt;", $matches_string);
+      $matches_string = preg_replace("/\\>/", "&gt;", $matches_string);
+
       return array(
-        'markup' => $matches[1].$text.$matches[1],
+        'markup' => $matches[1] . $matches_string,
         'extent' => strlen($matches[0]),
       );
     }
@@ -203,7 +205,7 @@ class ParsedownPlus extends DynamicParent
   //
   protected function blockMath($Line)
   {
-    $pattern = '/^[\\'.$Line['text'][0].']{2,2}[ ]*([^\\$]+)?[ ]*$/';
+    $pattern = '/^[\\' . $Line['text'][0] . ']{2,2}[ ]*([^\\$]+)?[ ]*$/';
 
     if (\preg_match($pattern, $Line['text'], $matches)) {
       $Block = array(
@@ -236,15 +238,15 @@ class ParsedownPlus extends DynamicParent
       unset($Block['interrupted']);
     }
 
-    if (preg_match('/^\\'.$Block['char'].'{2,2}.*$/', $Line['text'])) {
-      $Block['element']['text'] .= "\n".$Line['text'];
+    if (preg_match('/^\\' . $Block['char'] . '{2,2}.*$/', $Line['text'])) {
+      $Block['element']['text'] .= "\n" . $Line['text'];
 
       $Block['complete'] = true;
 
       return $Block;
     }
 
-    $Block['element']['text'] .= "\n".$Line['body'];
+    $Block['element']['text'] .= "\n" . $Line['body'];
 
     return $Block;
   }
@@ -263,7 +265,7 @@ class ParsedownPlus extends DynamicParent
   //
   protected function blockFencedCode($Line)
   {
-    if (preg_match('/^['.$Line['text'][0].']{3,}[ ]*([^`]+)?[ ]*$/', $Line['text'], $matches)) {
+    if (preg_match('/^[' . $Line['text'][0] . ']{3,}[ ]*([^`]+)?[ ]*$/', $Line['text'], $matches)) {
       $Element = array(
         'name' => 'code',
         'text' => '',
@@ -274,11 +276,11 @@ class ParsedownPlus extends DynamicParent
         $language = substr($matches[1], 0, $pos);
         $filename = substr($matches[1], $pos + 1);
 
-        if($filename === "") {
+        if ($filename === "") {
           $filename = null;
         }
 
-        $class = $this->langPrefix.$language;
+        $class = $this->langPrefix . $language;
 
         $Element['attributes'] = array(
           'class' => $class,
@@ -292,7 +294,7 @@ class ParsedownPlus extends DynamicParent
           'name' => 'pre',
           'handler' => 'element',
           'text' => $Element,
-/*
+          /*
           'attributes' => array(
             'class' => $class,
             'data-filename' => $filename
@@ -312,38 +314,36 @@ class ParsedownPlus extends DynamicParent
   {
     $Block = parent::blockHeader($Line);
 
-    if($Block['element']['name'] === 'h1' && !$this->isTitleFound){
+    if ($Block['element']['name'] === 'h1' && !$this->isTitleFound) {
       $this->title = $Block['element']['text'];
       $this->isTitleFound = true;
     }
 
     $index = array_search($Block['element']['name'], $this->tocTagList);
 
-    if($index !== false) {
+    if ($index !== false) {
       $text = $Block['element']['text'];
       $id = preg_replace("/\\s/", '_', $text);
 
-      if($index > $this->tocLastIndex) {
+      if ($index > $this->tocLastIndex) {
         $tmpIndex = $index;
-        while($tmpIndex > $this->tocLastIndex) {
+        while ($tmpIndex > $this->tocLastIndex) {
           $this->tocText .= "<ol>\n";
           $tmpIndex--;
         }
-      }
-      else if($index < $this->tocLastIndex) {
+      } else if ($index < $this->tocLastIndex) {
         $tmpIndex = $index;
-        while($tmpIndex < $this->tocLastIndex) {
+        while ($tmpIndex < $this->tocLastIndex) {
           $this->tocText .= "</ol>\n";
           $tmpIndex++;
         }
       }
 
       $this->tocLastIndex = $index;
-      $this->tocText .= '<li><a href="#'.$id.'">'.$text."</a></li>\n";
+      $this->tocText .= '<li><a href="#' . $id . '">' . $text . "</a></li>\n";
       $Block['element']['attributes']['id'] = $id;
     }
 
     return $Block;
   }
 }
-?>
